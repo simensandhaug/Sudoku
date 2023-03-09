@@ -1,0 +1,10 @@
+.root {
+  -fx-padding: 5px;
+}
+
+.sudoku-grid {
+  -fx-padding: 5px;
+  -fx-background-color: #f0f0f0;
+  -fx-border-color: #000000;
+  -fx-border-width: 1px;
+}
