@@ -1,10 +1,36 @@
 .root {
-  -fx-padding: 5px;
+  -fx-padding: 0px;
 }
 
 .sudoku-grid {
-  -fx-padding: 5px;
-  -fx-background-color: #f0f0f0;
-  -fx-border-color: #000000;
-  -fx-border-width: 1px;
+  -fx-border: 1px solid black;
+}
+
+.cell {
+  -fx-display: flex;
+  -fx-align-items: center;
+  -fx-justify-content: center;
+  -fx-font-size: 20px;
+  -fx-width: 40px;
+  -fx-height: 40px;
+  -fx-border: 1px solid black;
+  -fx-background-color: white;
+}
+
+.cell:focus {
+  -fx-background-color: lightblue;
+}
+
+.cell-given {
+  -fx-color: black;
+  opacity: 1;
+  background-color: white;
+}
+
+.cell-false {
+  -fx-color: red;
+}
+
+.cell-correct {
+  -fx-color: skyblue;
 }

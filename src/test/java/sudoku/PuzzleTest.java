@@ -1,12 +1,14 @@
 package sudoku;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import java.io.IOException;
+
 import org.junit.jupiter.api.Test;
 
-public class GridTest {
+public class PuzzleTest {
     @Test
-    public void testConstructor() {
-        Grid grid;
-        grid = new Grid();
+    public void testConstructor() throws IOException {
+
     }
 }

@@ -1,5 +1,5 @@
 package sudoku;
 
 public enum Difficulty {
-    EASY, MEDIUM, HARD
+    EASY, MEDIUM, HARD, UNKNOWN
 }

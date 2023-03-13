@@ -1,9 +1,12 @@
 package sudoku;
 
+import java.io.IOException;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 
 public class SudokuController {
     @FXML
@@ -17,15 +20,16 @@ public class SudokuController {
     private int DEFAULT_WINDOW_WIDTH = 800;
     private int DEFAULT_WINDOW_HEIGHT = 800;
 
-    private int SUDOKU_WIDTH = 450;
-    private int SUDOKU_HEIGHT = 450;
+    private int SUDOKU_WIDTH, SUDOKU_HEIGHT = 450;
+
+    private TextField selectedCell;
 
     private int GRID_SIZE = 9;
 
-    private Cell selectedCell;
+    private void newSudoku() throws IOException {
+        String sdkFilePath = getClass().getResource("/sudoku/files/example.sdk").getPath();
 
-    private void newSudoku() {
-        sudoku = new Sudoku();
+        sudoku = new Sudoku(sdkFilePath);
     }
 
     @FXML
@@ -34,7 +38,7 @@ public class SudokuController {
     }
 
     @FXML
-    public void initialize() {
+    public void initialize() throws IOException {
         sudokuPane.setPrefHeight(DEFAULT_WINDOW_HEIGHT);
         sudokuPane.setPrefWidth(DEFAULT_WINDOW_WIDTH);
         sudokuPane.getChildren().clear();
@@ -51,6 +55,7 @@ public class SudokuController {
         switch (status) {
             case GIVEN:
                 cell.getStyleClass().add("cell-given");
+                cell.setDisable(true);
                 break;
             case TO_GUESS:
                 cell.getStyleClass().add("cell-to-guess");
@@ -84,7 +89,7 @@ public class SudokuController {
         sudokuPane.getChildren().clear();
         for (int i = 0; i < GRID_SIZE; i++) {
             for (int j = 0; j < GRID_SIZE; j++) {
-                Cell c = sudoku.getGrid()[i][j];
+                Cell c = sudoku.getPuzzle()[i][j];
                 sudokuGrid.add(generateCellFXML(c), i, j);
             }
         }

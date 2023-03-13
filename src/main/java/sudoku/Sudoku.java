@@ -1,13 +1,27 @@
 package sudoku;
 
-public class Sudoku {
-    private Grid grid;
+import java.io.IOException;
+import java.util.Timer;
 
-    public Sudoku() {
-        grid = new Grid();
+public class Sudoku {
+    private Puzzle puzzle;
+    private Difficulty difficulty;
+    private int[][] solution;
+    private Timer timer;
+
+    public Sudoku(String sdkFilePath) throws IOException {
+        puzzle = PuzzleFactory.generateFromSDK(sdkFilePath);
+        difficulty = Difficulty.EASY;
+        timer = new Timer();
     }
 
-    public Cell[][] getGrid() {
-        return grid.getGrid();
+    public Sudoku(Difficulty difficulty) throws IOException {
+        puzzle = PuzzleFactory.generateFromDifficulty(difficulty);
+        this.difficulty = difficulty;
+        timer = new Timer();
+    }
+
+    public Cell[][] getPuzzle() {
+        return puzzle.getPuzzle();
     }
 }
