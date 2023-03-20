@@ -17,7 +17,7 @@ ValidationRegion (Box, Row, Column)
 
 Cell
 -> Integer value;
--> Set<Integer> remainingPossibleValues;
+-> Set<Integer> possibleValues;
 -> boolean isFixed;
 -> Collection<ValidationRegion> regions = new Collection<ValidationRegion>(3);
 
@@ -34,5 +34,3 @@ OneChoicePattern:Pattern
 SinglePossibilityPattern:Pattern
 OnlySquareRulePattern:Pattern
 https://sudokudragon.com/sudokustrategy.html
-
-
