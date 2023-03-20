@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class PuzzleFactory {
+
     public static Cell[][] generateEmptyPuzzle() {
         Cell[][] puzzle = new Cell[9][9];
         for (int i = 0; i < 9; i++) {
@@ -13,40 +14,6 @@ public class PuzzleFactory {
             }
         }
         return puzzle;
-    }
-
-    public static Puzzle generateFromDifficulty(Difficulty difficulty) {
-        Cell[][] puzzle = generateEmptyPuzzle();
-        switch (difficulty) {
-            case EASY:
-                generateEasy(puzzle);
-                break;
-            case MEDIUM:
-                generateMedium(puzzle);
-                break;
-            case HARD:
-                generateHard(puzzle);
-                break;
-            case UNKNOWN:
-                break;
-        }
-        return new Puzzle(puzzle, "Unknown", "Unknown", "Unknown", "Unknown", "Unknown", "Unknown", "Unknown",
-                "Unknown");
-    }
-
-    private static Puzzle generateEasy(Cell[][] puzzle) {
-        return new Puzzle(puzzle, "Unknown", "Unknown", "Unknown", "Unknown", "Unknown", "Unknown", "Unknown",
-                "Unknown");
-    }
-
-    private static Puzzle generateMedium(Cell[][] puzzle) {
-        return new Puzzle(puzzle, "Unknown", "Unknown", "Unknown", "Unknown", "Unknown", "Unknown", "Unknown",
-                "Unknown");
-    }
-
-    private static Puzzle generateHard(Cell[][] puzzle) {
-        return new Puzzle(puzzle, "Unknown", "Unknown", "Unknown", "Unknown", "Unknown", "Unknown", "Unknown",
-                "Unknown");
     }
 
     public static Puzzle generateFromSDK(String sdkFilePath) throws IOException {

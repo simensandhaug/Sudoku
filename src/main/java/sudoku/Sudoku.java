@@ -11,13 +11,7 @@ public class Sudoku {
 
     public Sudoku(String sdkFilePath) throws IOException {
         puzzle = PuzzleFactory.generateFromSDK(sdkFilePath);
-        difficulty = Difficulty.EASY;
-        timer = new Timer();
-    }
-
-    public Sudoku(Difficulty difficulty) throws IOException {
-        puzzle = PuzzleFactory.generateFromDifficulty(difficulty);
-        this.difficulty = difficulty;
+        this.difficulty = Difficulty.EASY;
         timer = new Timer();
     }
 
