@@ -5,14 +5,20 @@ import java.util.Collection;
 import java.util.Set;
 
 public class Cell {
-    private int value;
+    private Integer value;
     private Set<Integer> possibleValues = Set.of(1, 2, 3, 4, 5, 6, 7, 8, 9);
     private boolean isGiven;
     private Collection<ValidationRegion> validationRegions = new ArrayList<ValidationRegion>(3);
 
-    public Cell(int value, boolean isGiven) {
+    public Cell(Integer value, boolean isGiven) {
         this.value = value;
         this.isGiven = isGiven;
+        this.possibleValues = Set.of();
+    }
+
+    public Cell() {
+        this.value = null;
+        this.isGiven = false;
     }
 
     public boolean validate() {
@@ -24,10 +30,10 @@ public class Cell {
     }
 
     public int getValue() {
-        return value;
+        return value == null ? 0 : value;
     }
 
-    public void setValue(int value) {
+    public void setValue(Integer value) {
         this.value = value;
     }
 

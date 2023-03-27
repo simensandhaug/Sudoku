@@ -1,20 +1,46 @@
 .root {
-  -fx-padding: 0px;
-}
-
-.sudoku-grid {
-  -fx-border: 1px solid black;
+  -fx-padding: 10px;
 }
 
 .cell {
+  -fx-width: 40px;
+  -fx-height: 40px;
   -fx-display: flex;
   -fx-align-items: center;
   -fx-justify-content: center;
-  -fx-font-size: 20px;
-  -fx-width: 40px;
-  -fx-height: 40px;
-  -fx-border: 1px solid black;
   -fx-background-color: white;
+  -fx-postion: relative;
+  border: 1px solid black;
+}
+
+.gameMenuBar {
+  -fx-display: flex;
+  -fx-justify-content: space-between;
+  -fx-align-items: center;
+  -fx-width: 100%;
+}
+
+.gridPane {
+  -fx-border-color: black;
+  -fx-border-width: 2px;
+  -fx-border-style: solid;
+  -fx-alignment: none;
+}
+
+.sudokuContainer {
+  -fx-display: flex;
+  -fx-justify-content: center;
+  -fx-align-items: center;
+  -fx-width: 100%;
+}
+
+.cell:disabled {
+  -fx-display: flex;
+  -fx-align-items: center;
+  -fx-justify-content: center;
+  -fx-background-color: white;
+  -fx-color: black;
+  -fx-opacity: 1;
 }
 
 .cell:focus {
@@ -23,8 +49,8 @@
 
 .cell-given {
   -fx-color: black;
-  opacity: 1;
-  background-color: white;
+  -fx-opacity: 1;
+  -fx-background-color: white;
 }
 
 .cell-false {

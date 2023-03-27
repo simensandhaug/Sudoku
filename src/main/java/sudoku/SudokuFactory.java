@@ -1,14 +1,12 @@
 package sudoku;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
+import java.util.Date;
+import java.util.Scanner;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
+import java.text.SimpleDateFormat;
 
 public class SudokuFactory {
     private static final int BOARD_SIZE = 9;
@@ -21,7 +19,7 @@ public class SudokuFactory {
         // Add empty cells
         IntStream.range(0, BOARD_SIZE).forEach(i -> {
             IntStream.range(0, BOARD_SIZE).forEach(j -> {
-                Cell cell = new Cell(0, false);
+                Cell cell = new Cell();
                 board.setCell(i, j, cell);
             });
         });
@@ -58,15 +56,88 @@ public class SudokuFactory {
         return board;
     }
 
-    public static Sudoku createSudokuFromSDKFile(String sdkFile) {
-        try (Stream<String> stream = Files.lines(Paths.get(String.valueOf(new File(sdkFile))))) {
-            List<String> data = stream
-                    .map(s -> s.strip())
-                    .toList();
-            System.out.println(data);
-        } catch (IOException e) {
-            e.printStackTrace();
+    public static Sudoku createSudokuFromInputStream(InputStream is) throws Exception {
+        Board board = createBoard();
+        Scanner s = new Scanner(is);
+
+        /*
+         * #ARuud
+         * #DA random puzzle created by SudoCue
+         * #CJust start plugging in the numbers
+         * #B03-08-2006
+         * #SSudoCue
+         * #LEasy
+         * #Uhttp://www.sudocue.net/
+         * 2..1.5..3
+         * .54...71.
+         * .1.2.3.8.
+         * 6.28.73.4
+         * .........
+         * 1.53.98.6
+         * .2.7.1.6.
+         * .81...24.
+         * 7..4.2..1
+         */
+
+        String name = "sudoku";
+        String author = "UNKNOWN";
+        String description = "UNKNOWN";
+        String comment = "UNKNOWN";
+        Date date = new Date();
+        String sourceName = "UNKNOWN";
+        Difficulty difficulty = Difficulty.UNKNOWN;
+        String sourceUrl = "UNKNOWN";
+
+        while (s.hasNextLine()) {
+            String line = s.nextLine();
+            if (line.contains("#")) {
+                line = line.substring(1, line.length());
+                String id = line.substring(0, 1);
+                switch (id) {
+                    case "A":
+                        author = line.substring(1, line.length());
+                        break;
+                    case "D":
+                        description = line.substring(1, line.length());
+                        break;
+                    case "C":
+                        comment = line.substring(1, line.length());
+                        break;
+                    case "B":
+                        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+                        date = formatter.parse(line.substring(1, line.length()));
+                        name = line.substring(1, line.length());
+                        break;
+                    case "S":
+                        sourceName = line.substring(1, line.length());
+                        break;
+                    case "L":
+                        difficulty = Difficulty.valueOf(line.substring(1, line.length()).toUpperCase());
+                        break;
+                    case "U":
+                        sourceUrl = line.substring(1, line.length());
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            // Sudokuboard
+            else {
+                for (int i = 0; i < BOARD_SIZE; i++) {
+                    for (int j = 0; j < BOARD_SIZE; j++) {
+                        char c = line.charAt(j);
+                        if (c != '.') {
+                            board.setCell(i, j, new Cell(Character.getNumericValue(c), true));
+                        } else {
+                            board.setCell(i, j, new Cell());
+                        }
+                    }
+                    if (s.hasNextLine())
+                        line = s.nextLine();
+                }
+            }
         }
-        return null;
+        return new Sudoku(name, board, author, description, comment, date, sourceName, difficulty, sourceUrl);
     }
 }

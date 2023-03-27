@@ -1,4 +1,4 @@
-open module TDT4100_project {
+open module sudoku {
     requires javafx.base;
     requires javafx.controls;
     requires javafx.fxml;

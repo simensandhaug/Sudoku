@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class SudokuApp extends Application {
- 
+
     public static void main(String[] args) {
         Application.launch(args);
     }
@@ -16,8 +16,7 @@ public class SudokuApp extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         primaryStage.setTitle("Sudoku");
-        primaryStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("App.fxml"))));
+        primaryStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("Menu.fxml"))));
         primaryStage.show();
     }
-
 }
