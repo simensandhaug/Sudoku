@@ -1,4 +1,4 @@
-package sudoku;
+package sudoku.ui;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -16,7 +16,7 @@ public class SudokuApp extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         primaryStage.setTitle("Sudoku");
-        primaryStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("Menu.fxml"))));
+        primaryStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("App.fxml"))));
         primaryStage.show();
     }
 }
