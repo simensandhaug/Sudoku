@@ -17,8 +17,18 @@ public class Sudoku {
      * Constructs a Sudoku puzzle with the given board.
      *
      * @param board The 9x9 grid of cells representing the Sudoku puzzle.
+     * 
+     * @throws IllegalArgumentException If the board is not 9x9.
      */
-    public Sudoku(Cell[][] board) {
+    public Sudoku(Cell[][] board) throws IllegalArgumentException {
+        if (board.length != 9) {
+            throw new IllegalArgumentException("Board must have 9 rows.");
+        }
+        for (int i = 0; i < 9; i++) {
+            if (board[i].length != 9) {
+                throw new IllegalArgumentException("Board must have 9 columns.");
+            }
+        }
         this.board = board;
         this.regions = generateRegions(board);
     }
@@ -30,6 +40,15 @@ public class Sudoku {
      */
     public Cell[][] getBoard() {
         return board;
+    }
+
+    /**
+     * Returns a list of CellRegion objects for all rows, columns, and boxes.
+     * 
+     * @return
+     */
+    public List<CellRegion> getRegions() {
+        return regions;
     }
 
     /**

@@ -37,6 +37,13 @@ public class SudokuGame {
     }
 
     /**
+     * Sets the current Sudoku board
+     */
+    public void setCurrentSudoku(Sudoku sudoku) {
+        this.currentSudoku = sudoku;
+    }
+
+    /**
      * Starts a new game by getting the next Sudoku board from the provider
      */
     public void newGame() {
@@ -74,6 +81,6 @@ public class SudokuGame {
     public void loadGame(File file) throws IOException {
         String path = file.getAbsolutePath();
         List<String> lines = FileHelper.readLines(path, false);
-        currentSudoku = sudokuProvider.parseSudoku(lines.get(0));
+        setCurrentSudoku(sudokuProvider.parseSudoku(lines.get(0)));
     }
 }

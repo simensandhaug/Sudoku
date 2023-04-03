@@ -17,8 +17,6 @@ import sudoku.ui.constants.Messages;
 
 public class SudokuController {
 
-    private static final String STATE_FILE_PATH = "game_state.txt";
-
     @FXML
     private GridPane grid;
 

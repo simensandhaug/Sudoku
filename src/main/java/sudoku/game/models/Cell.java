@@ -11,11 +11,18 @@ public class Cell {
     /**
      * Constructs a new Cell object with the specified row, column, and value.
      *
-     * @param row    The row index of the cell.
-     * @param column The column index of the cell.
-     * @param value  The value of the cell.
+     * @param row    The row index of the cell (0 <= row <= 8).
+     * @param column The column index of the cell (0 <= column <= 8).
+     * @param value  The value of the cell (0 <= value <= 9).
+     * @throws IllegalArgumentException if the row, column, or value is invalid.
      */
-    public Cell(int row, int column, int value) {
+    public Cell(int row, int column, int value) throws IllegalArgumentException {
+        if (row < 0 || row > 8)
+            throw new IllegalArgumentException("Row index must be between 0 and 8 (inclusive).");
+        if (column < 0 || column > 8)
+            throw new IllegalArgumentException("Column index must be between 0 and 8 (inclusive).");
+        if (value < 0 || value > 9)
+            throw new IllegalArgumentException("Value must be between 0 and 9 (inclusive).");
         this.row = row;
         this.column = column;
         this.value = value;
