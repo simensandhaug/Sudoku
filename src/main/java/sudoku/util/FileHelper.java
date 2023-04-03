@@ -34,7 +34,6 @@ public class FileHelper {
         }
 
         try (InputStream resourceAsStream = FileHelper.class.getResourceAsStream(path)) {
-            System.out.println(resourceAsStream);
             if (resourceAsStream == null) {
                 throw new IOException("Resource not found");
             }

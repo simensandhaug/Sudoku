@@ -1,0 +1,95 @@
+.root {
+  -fx-font-size: 24px;
+  -fx-font-family: "Arial";
+}
+
+.button-bar {
+  -fx-padding: 10px;
+}
+
+.button {
+  -fx-padding: 8px 16px;
+  -fx-background-color: #4caf50;
+  -fx-text-fill: #ffffff;
+}
+
+.button:hover {
+  -fx-background-color: #45a049;
+}
+
+.button:pressed {
+  -fx-background-color: #3f9142;
+}
+
+.grid-pane {
+  -fx-background-color: #ffffff;
+  -fx-border-color: #333333;
+  -fx-border-width: 2px;
+}
+
+.cell {
+  -fx-background-color: #f0f0f0;
+  -fx-border-color: #333333;
+  -fx-border-width: 1px;
+  -fx-min-width: 50px;
+  -fx-min-height: 50px;
+  -fx-max-width: 50px;
+  -fx-max-height: 50px;
+  -fx-alignment: center;
+  -fx-font-weight: bold;
+  -fx-cursor: none;
+}
+
+.cell.prefilled {
+  -fx-background-color: #f0f0f0;
+  -fx-border-color: #333333;
+  -fx-border-width: 1px;
+  -fx-min-width: 50px;
+  -fx-min-height: 50px;
+  -fx-max-width: 50px;
+  -fx-max-height: 50px;
+  -fx-alignment: center;
+  -fx-font-weight: bold;
+  -fx-cursor: none;
+}
+
+.cell.invalid {
+  -fx-background-color: #f0f0f0;
+  -fx-border-color: #333333;
+  -fx-border-width: 1px;
+  -fx-min-width: 50px;
+  -fx-min-height: 50px;
+  -fx-max-width: 50px;
+  -fx-max-height: 50px;
+  -fx-alignment: center;
+  -fx-font-weight: bold;
+  -fx-cursor: none;
+  -fx-text-fill: rgb(229, 92, 108);
+}
+
+.cell.valid {
+  -fx-background-color: #f0f0f0;
+  -fx-border-color: #333333;
+  -fx-border-width: 1px;
+  -fx-min-width: 50px;
+  -fx-min-height: 50px;
+  -fx-max-width: 50px;
+  -fx-max-height: 50px;
+  -fx-alignment: center;
+  -fx-font-weight: bold;
+  -fx-cursor: none;
+  -fx-text-fill: rgb(0, 114, 227);
+}
+
+.text-field {
+  -fx-background-color: #f0f0f0;
+  -fx-border-color: #333333;
+  -fx-border-width: 1px;
+  -fx-min-width: 50px;
+  -fx-min-height: 50px;
+  -fx-max-width: 50px;
+  -fx-max-height: 50px;
+  -fx-alignment: center;
+  -fx-font-weight: bold;
+  -fx-cursor: null;
+}

@@ -1,87 +1,105 @@
 package sudoku.ui;
 
+import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
-import javafx.scene.layout.TilePane;
+import javafx.scene.layout.GridPane;
 import sudoku.game.SudokuGame;
 import sudoku.ui.constants.Messages;
 
+/**
+ * A helper class that provides methods to generate and display the Sudoku board
+ * UI
+ */
 public class UIHelper {
 
     /**
-     * Method that generates a text field with the specified value and adds it to
-     * the grid
+     * Generates a text field with the specified value and adds it to the grid
      * 
-     * @param grid the FXML {@link TilePane grid} containing the text fields
-     * @param game the {@link SudokuGame game} object containing the board state
+     * @param grid The FXML {@link GridPane grid} containing the text fields
+     * @param game The {@link SudokuGame game} object containing the board state
      */
-    public static void displayBoard(TilePane grid, SudokuGame game) {
+    public static void displayBoard(GridPane grid, SudokuGame game) {
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 TextField textField = generateTextField(game.getCurrentSudoku().getBoard()[i][j].getValue());
-                grid.getChildren().add(textField);
+                grid.add(textField, j, i);
             }
         }
     }
 
     /**
-     * Method that adds event handlers to the text fields in the grid to update the
-     * state
+     * Adds event handlers to the text fields in the grid to update the state
      * 
-     * @param grid the FXML {@link TilePane grid} containing the text fields
-     * @param game the {@link SudokuGame game} object containing the board state
+     * @param grid The FXML {@link GridPane grid} containing the text fields
+     * @param game The {@link SudokuGame game} object containing the board state
      */
-    public static void addEventHandlers(TilePane grid, SudokuGame game) {
-        for (int i = 0; i < 9; i++) {
-            for (int j = 0; j < 9; j++) {
-                int finalI = i;
-                int finalJ = j;
-                TextField textField = (TextField) grid.getChildren().get(i * 9 + j);
+    public static void addEventHandlers(GridPane grid, SudokuGame game) {
+        grid.getChildren().forEach(node -> {
+            if (node instanceof TextField) {
+                TextField textField = (TextField) node;
+                int rowIndex = GridPane.getRowIndex(node);
+                int colIndex = GridPane.getColumnIndex(node);
+
                 textField.textProperty().addListener((observable, oldValue, newValue) -> {
-                    if (newValue.length() == 0) {
-                        game.getCurrentSudoku().getBoard()[finalI][finalJ].setValue(0);
+                    int value = newValue.isEmpty() ? 0 : Integer.parseInt(newValue);
+                    game.getCurrentSudoku().getBoard()[rowIndex][colIndex].setValue(value);
+
+                    if (!game.getCurrentSudoku().cellValid(rowIndex, colIndex, value)) {
+                        if (!textField.getStyleClass().contains("invalid"))
+                            textField.getStyleClass().add("invalid");
+
+                        if (textField.getStyleClass().contains("valid"))
+                            textField.getStyleClass().remove("valid");
                     } else {
-                        game.getCurrentSudoku().getBoard()[finalI][finalJ].setValue(Integer.parseInt(newValue));
+                        if (!textField.getStyleClass().contains("valid"))
+                            textField.getStyleClass().add("valid");
+
+                        if (textField.getStyleClass().contains("invalid"))
+                            textField.getStyleClass().remove("invalid");
                     }
 
                     if (game.isFinished()) {
                         Alert alert = new Alert(Alert.AlertType.INFORMATION, Messages.INFO_GAME_FINISHED);
-                        alert.show();
+                        alert.showAndWait();
                     }
                 });
+
+                textField.setTextFormatter(new TextFormatter<Integer>(c -> {
+                    if (c.getControlNewText().matches("\\d?")) {
+                        return c;
+                    } else {
+                        return null;
+                    }
+                }));
             }
-        }
+        });
     }
 
     /**
-     * Method that generates a text field with the specified value
+     * Generates a text field with the specified value
      * 
-     * @param value the value to be displayed in the text field
-     * @return the generated FXML {@link TextField}
+     * @param value The value to be displayed in the text field
+     * @return The generated FXML {@link TextField}
      */
     private static TextField generateTextField(int value) {
-        TextField textField = new TextField();
+        TextField textField = new TextField(value == 0 ? "" : String.valueOf(value));
         textField.setPrefSize(50, 50);
         textField.setMaxSize(50, 50);
         textField.setMinSize(50, 50);
-        textField.setText(String.valueOf(value));
-        textField.getStyleClass().add("sudoku-cell");
+        textField.getStyleClass().add("cell");
+        textField.setAlignment(Pos.CENTER); // Set text alignment to center
+
         if (value != 0) {
             textField.setEditable(false);
+            textField.getStyleClass().add("prefilled"); // Apply the "prefilled" style class
+        } else {
+            textField.getStyleClass().add("editable"); // Apply the "editable" style class
+            textField.getStyleClass().add("valid"); // Apply the "valid" style class
         }
-        if (value == 0) {
-            textField.setText("");
-        }
-
-        textField.setTextFormatter(new TextFormatter<Integer>(c -> {
-            if (c.getControlNewText().matches("\\d?")) {
-                return c;
-            } else {
-                return null;
-            }
-        }));
 
         return textField;
     }
+
 }

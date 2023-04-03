@@ -8,7 +8,7 @@ import sudoku.game.interfaces.SudokuProvider;
 import sudoku.util.FileHelper;
 
 /**
- * A {@link SudokuProvider} that reads Sudoku boards from a file
+ * A {@link SudokuProvider} that reads Sudoku boards from a file.
  */
 public class FileSudokuProvider implements SudokuProvider {
 
@@ -18,7 +18,7 @@ public class FileSudokuProvider implements SudokuProvider {
     /**
      * Creates a new {@link FileSudokuProvider} that reads Sudoku boards from the
      * default file.
-     * 
+     *
      * @throws IOException if the file cannot be read
      */
     public FileSudokuProvider() throws IOException {
@@ -28,9 +28,9 @@ public class FileSudokuProvider implements SudokuProvider {
     /**
      * Creates a new {@link FileSudokuProvider} that reads Sudoku boards from the
      * given file.
-     * 
-     * @param path     The path to the file
-     * @param resource Whether the file is a resource or not
+     *
+     * @param path     The path to the file.
+     * @param resource Whether the file is a resource or not.
      * @throws IOException if the file cannot be read
      */
     public FileSudokuProvider(String path, boolean resource) throws IOException {
@@ -39,17 +39,32 @@ public class FileSudokuProvider implements SudokuProvider {
     }
 
     /**
-     * @return the sudokus read from the file
+     * Returns the Sudokus read from the file.
+     *
+     * @return The Sudokus read from the file.
      */
     public List<String> getSudokus() {
         return sudokus;
     }
 
+    /**
+     * Returns a randomly selected Sudoku puzzle from the file.
+     *
+     * @return A randomly selected Sudoku puzzle from the file.
+     */
     @Override
     public Sudoku getNextSudoku() {
-        return parseSudoku(sudokus.get(random.nextInt(sudokus.size())));
+        String textForm = sudokus.get(random.nextInt(sudokus.size()));
+        return parseSudoku(textForm);
     }
 
+    /**
+     * Parses the given string representation of a Sudoku puzzle and returns a
+     * corresponding {@link Sudoku} object.
+     *
+     * @param textForm The string representation of the Sudoku puzzle.
+     * @return The {@link Sudoku} object corresponding to the string representation.
+     */
     public Sudoku parseSudoku(String textForm) {
         Cell[][] board = new Cell[9][9];
         int i = 0;
@@ -57,7 +72,7 @@ public class FileSudokuProvider implements SudokuProvider {
             int j = 0;
             for (String cell : row.split("")) {
                 int value = Integer.parseInt(cell);
-                board[i][j] = new Cell(j, i, value);
+                board[i][j] = new Cell(i, j, value);
                 j++;
             }
             i++;
