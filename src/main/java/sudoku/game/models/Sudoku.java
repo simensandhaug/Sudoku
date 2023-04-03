@@ -12,6 +12,11 @@ public class Sudoku {
         return board;
     }
 
+    /**
+     * Method to check if the board is filled correctly
+     * 
+     * @return true if the board is finished, false otherwise
+     */
     public boolean isFinished() {
         // Check if the board is finished
         // A board is finished if all cells are filled and there are no conflicts
@@ -85,6 +90,12 @@ public class Sudoku {
         return isValidRegion(cells);
     }
 
+    /**
+     * Checks if the given region is valid
+     * 
+     * @param cells The cells of the region
+     * @return true if the region is valid, false otherwise
+     */
     private boolean isValidRegion(Cell[] cells) {
         // Check if the given region is valid
         // A region is valid if it contains all cells from 1 to 9 exactly once

@@ -26,6 +26,11 @@ public class SudokuController {
 
     private SudokuGame game;
 
+    /**
+     * Method that initializes the game and displays the board
+     * 
+     * @throws IOException
+     */
     @FXML
     public void initialize() throws IOException {
         try {
@@ -40,34 +45,51 @@ public class SudokuController {
         UIHelper.addEventHandlers(grid, game);
     }
 
+    /**
+     * Method that displays a critical error message and exits the application
+     * 
+     * @param message the message to be displayed
+     */
     private void handleCriticalError(String message) {
         Alert alert = new Alert(AlertType.ERROR, message);
         alert.showAndWait();
         System.exit(1);
     }
 
+    /**
+     * Method that displays a warning message
+     * 
+     * @param message the message to be displayed
+     */
+    private void handleWarning(String message) {
+        Alert alert = new Alert(AlertType.WARNING, message);
+        alert.show();
+    }
+
+    /**
+     * Method that saves the game state to a file
+     */
     @FXML
     public void saveGame() {
         try {
             this.game.saveGame(STATE_FILE_PATH);
         } catch (IOException e) {
             e.printStackTrace();
-
-            Alert alert = new Alert(AlertType.WARNING, Messages.ERROR_COULD_NOT_SAVE_GAME_STATE);
-            alert.show();
+            handleWarning(Messages.ERROR_COULD_NOT_SAVE_GAME_STATE);
         }
 
     }
 
+    /**
+     * Method that loads the game state from a file
+     */
     @FXML
     public void loadGame() {
         try {
             this.game.loadGame(STATE_FILE_PATH);
         } catch (IOException e) {
             e.printStackTrace();
-
-            Alert alert = new Alert(AlertType.WARNING, Messages.ERROR_COULD_NOT_LOAD_FROM_FILE);
-            alert.show();
+            handleWarning(Messages.ERROR_COULD_NOT_LOAD_FROM_FILE);
         }
     }
 }

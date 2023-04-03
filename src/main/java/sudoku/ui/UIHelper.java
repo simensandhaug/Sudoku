@@ -9,6 +9,13 @@ import sudoku.ui.constants.Messages;
 
 public class UIHelper {
 
+    /**
+     * Method that generates a text field with the specified value and adds it to
+     * the grid
+     * 
+     * @param grid the FXML {@link TilePane grid} containing the text fields
+     * @param game the {@link SudokuGame game} object containing the board state
+     */
     public static void displayBoard(TilePane grid, SudokuGame game) {
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
@@ -18,6 +25,13 @@ public class UIHelper {
         }
     }
 
+    /**
+     * Method that adds event handlers to the text fields in the grid to update the
+     * state
+     * 
+     * @param grid the FXML {@link TilePane grid} containing the text fields
+     * @param game the {@link SudokuGame game} object containing the board state
+     */
     public static void addEventHandlers(TilePane grid, SudokuGame game) {
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
@@ -40,6 +54,12 @@ public class UIHelper {
         }
     }
 
+    /**
+     * Method that generates a text field with the specified value
+     * 
+     * @param value the value to be displayed in the text field
+     * @return the generated FXML {@link TextField}
+     */
     private static TextField generateTextField(int value) {
         TextField textField = new TextField();
         textField.setPrefSize(50, 50);
