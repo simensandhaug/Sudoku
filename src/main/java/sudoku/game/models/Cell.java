@@ -3,6 +3,7 @@ package sudoku.game.models;
 /**
  * A single cell in a Sudoku puzzle.
  */
+
 public class Cell {
     private final int row;
     private final int column;

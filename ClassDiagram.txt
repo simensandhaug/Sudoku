@@ -1,0 +1,53 @@
+[Cell]
+- row: int
+- column: int
+- value: int
++ Cell(int, int, int): throws IllegalArgumentException
++ getRow(): int
++ getColumn(): int
++ getValue(): int
++ setValue(int): void
++ toString(): String
+
+[CellRegion]
+- cells: List<Cell>
++ CellRegion(List<Cell>): throws IllegalArgumentException
++ isValid(): boolean
++ isFinished(): boolean
++ getCells(): List<Cell>
++ toString(): String
+
+[FileSudokuProvider] -implements-> [SudokuProvider]
+- random: Random
+- sudokus: List<String>
++ FileSudokuProvider(): throws IOException
++ FileSudokuProvider(String, boolean): throws IOException
++ getSudokus(): List<String>
++ getNextSudoku(): Sudoku
++ parseSudoku(String): Sudoku
+
+[Sudoku]
+- board: Cell[][]
+- regions: List<CellRegion>
++ Sudoku(Cell[][]): throws IllegalArgumentException
++ getBoard(): Cell[][]
++ getRegions(): List<CellRegion>
++ isFinished(): boolean
++ isValid(): boolean
++ cellValid(int, int, int): boolean
++ toString(): String
++ printRegions(): void
+
+[SudokuGame]
+- sudokuProvider: SudokuProvider
+- currentSudoku: Sudoku
++ SudokuGame(SudokuProvider)
++ getCurrentSudoku(): Sudoku
++ setCurrentSudoku(Sudoku): void
++ newGame(): void
++ isFinished(): boolean
++ saveGame(File): throws IOException
++ loadGame(File): throws IOException
+
+[SudokuProvider] <<interface>>
++ getNextSudoku(): Sudoku

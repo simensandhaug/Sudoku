@@ -24,6 +24,18 @@ public class UIHelper {
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 TextField textField = generateTextField(game.getCurrentSudoku().getBoard()[i][j].getValue());
+                // Add border-bottom and border-right classes to correct cells
+                if (i == 2 || i == 5) {
+                    textField.getStyleClass().add("border-bottom");
+                }
+                if (j == 2 || j == 5) {
+                    textField.getStyleClass().add("border-right");
+                }
+                if (i == 2 && j == 2 || i == 2 && j == 5 || i == 5 && j == 2 || i == 5 && j == 5) {
+                    textField.getStyleClass().remove("border-bottom");
+                    textField.getStyleClass().remove("border-right");
+                    textField.getStyleClass().add("border-bottom-right");
+                }
                 grid.add(textField, j, i);
             }
         }
