@@ -1,4 +1,4 @@
-package sudoku.ui.constants;
+package sudoku.util.constants;
 
 public class Messages {
     public static final String ERROR_COULD_NOT_LOAD_FROM_FILE = "An error has occurred while loading the specified file";

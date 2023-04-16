@@ -61,7 +61,9 @@ public class Cell {
      *
      * @param value The new value of the cell.
      */
-    public void setValue(int value) {
+    public void setValue(int value) throws IllegalArgumentException {
+        if (value < 0 || value > 9)
+            throw new IllegalArgumentException("Value must be between 0 and 9 (inclusive).");
         this.value = value;
     }
 

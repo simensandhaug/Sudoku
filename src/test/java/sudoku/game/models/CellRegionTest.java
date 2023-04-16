@@ -23,7 +23,11 @@ public class CellRegionTest {
         for (int i = 0; i < 10; i++) {
             invalidAmountOfCells.add(new Cell(0, 0, 0));
         }
-        CellRegion region = new CellRegion(validAmountOfCells);
+
+        assertDoesNotThrow(() -> {
+            new CellRegion(validAmountOfCells);
+        }, "CellRegion can have 9 cells");
+
         assertThrows(IllegalArgumentException.class, () -> {
             new CellRegion(invalidAmountOfCells);
         }, "CellRegion must have 9 cells");

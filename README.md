@@ -1,86 +1,89 @@
-# Skjelettprosjekt for TDT4100 prosjekt V2023
+# Documentation for Sudoku
 
-Dette repoet er et skjelettprosjekt for TDT4100 prosjektet våren 2023.
+Author: Simen Sandhaug
 
-Vi har opprettet et eksempelprosjekt her, som ment for at dere skal kunne komme raskt igang med deres eget prosjekt.
+# Part 1: Description of the app
 
-## TL;DR
+In this project, I have developed a **Sudoku** game using **Java** and **JavaFX** to create a user-friendly and interactive application. The goal of the application is to provide the user with an interface for solving Sudoku puzzles, and for saving and loading games to and from file `*.txt`.
 
-Lag en ny mappe i `src/main/java/` som er deres prosjekt. Opprett en startsfil for appen, slik som [ExampleProjectApp.java](src/main/java/exampleproject/ExampleProjectApp.java) og en kontroller som [ExampleProjectController.java](src/main/java/exampleproject/ExampleProjectController.java) i denne nye mappen. Lag så en mappe i `src/main/resources` med samme navn som prosjektet deres og et view som [App.fxml](src/main/resources/exampleproject/App.fxml) i denne nye mappen.
+The application includes several features that enhance the user experience, such as the ability to upload previous games using a specific **[format](#format)**, save their games for later use, and get entirely new games selected from a predefined list. Additionally, the app provides visual feedback indicating whether the input the user enters is valid or not.
 
-**Eventuelt**: Endre navn på filer og mapper fra "ExampleProject" til deres prosjektnavn.
+To ensure an efficient and maintainable codebase, I have implemented the **Model-View-Controller (MVC)** principle in the design of the application. This has helped separate the logic and interface in the app, making it easier to expand and improve functionality along the way. Through this documentation, I will describe the main features of the application, present a diagram illustrating an essential part of the app, and reflect on my choices and understanding of object-oriented programming and the curriculum in the subject.
 
-## Litt rask info
+The **models** (logic) for the application can be found in the package [sudoku.game](/src/main/java/sudoku/game/)
 
-Allerede nå er det mulig å kjøre filen [ExampleProjectApp.java](src/main/java/exampleproject/ExampleProjectApp.java) i VSCode for å få opp en liten kalkulator-app.
+The **view** and **controller** for the application can be found in the package [sudoku.ui](/src/main/java/sudoku/ui/)
 
-Denne filen er "startsfilen" til applikasjonen. Her settes tittel på appen, hvilken FXML-fil som skal brukes, og den er ansvarlig for å starte selve applikasjonen:
+**Utility** classes such as constants and the [FileHelper.java](/src/main/java/sudoku/util/FileHelper.java) class can be found in the package [sudoku.util](/src/main/java/sudoku/util/)
+
+The
+
+# Format
+
+The Sudoku format is saved in a `*.txt` file and looks like this:
+
+> 346179258/187523964/529648371/965832417/472916835/813754629/798261543/631485792/254397186
+
+Here each row is separated with a `/` and there are 9 cells in each row that can represent a number: `[0-9]` (0 represents an empty cell)
+
+# Part 2: Diagram
+
+We were tasked with drawing either a class diagram, object diagram, object state diagram or a sequence diagram. I chose to create a **class diagram** for this Sudoku project.
+
+![Class Diagram](ClassDiagram.png)
+
+The diagram shows how the logic section of the app is built up, and is therefore an **interesting/important** part of the application which was the second requirement for this part.
+
+# Part 3: Questions
+
+In this section i will reflect upon my choices while creating the application, and show that i have used and understood key concepts from the course curriculum.
+
+## 1 and 2
+
+##### Interface
+
+One of the requirements for the application was to have atleast one interface. [ISudokuProvider.java](/src/main/java/sudoku/game/interfaces/ISudokuProvider.java) is my one and only interface for this project. The reason is that i didnt feel it necesarry to use interfaces anywhere else due to the simplicity and structure of the app. However, since i have a `isFinished()` method in both the [SudokuGame.java](/src/main/java/sudoku/game/SudokuGame.java) and [Sudoku.java](/src/main/java/sudoku/game/models/Sudoku.java) i could have used an interface to define this. This method brings me to my next point
+
+##### Delegation
+
+In the `isFinished()` method in [SudokuGame.java](/src/main/java/sudoku/game/SudokuGame.java) i call `currentSudoku.isFinished()`. This is an example of delegation, where i refer further and delegate the task to another class. The reason i have done this is so that all the Game logic can be called from the `SudokuController` on one single instance of the [SudokuGame.java](/src/main/java/sudoku/game/SudokuGame.java) class. This ensures that i can have the cleanest code possible, and as little logic in the controller as possible. It also has the state of the game in one place, which is clean.
+
+##### Inheritance
+
+I have not used inheritance in the application, basically due to the simple nature of it, and the fact that no two classes need the same behaviour inherited from a parent. There is no logical or clean way to use inheritance in my application as far as i can see, because doing so would just make a redundant class. None of the classes need the same functionality, so you would effectivly just double one class just for the sake of it. However if i did my logic a little bit differently (more complicated and abstracted), i could have the `Cell` and `CellRegion` classes extend a `Coordinate` or `Position` class, since they both technically could use this logic. Right now i dont need to store the coordinates of the CellRegions, because i only use them for validation of each row, column or 3x3 box (stream and check that all values are non-empty and unique), but if i were to create a Sudoku Solver i could need these positions and what type they are (Row, Col, Box) to apply patterns and Sudoku rules.
+
+## 3
+
+I have separated the [models](/src/main/java/sudoku/game/) (logic) of the app, and the [view and controller](/src/main/java/sudoku/ui/) into separate packages. The models do not contain and FXML or JavaFX, and they only contain the logic for the application. The controller class connects the view and the models together, like it should. It detects changes in the view via EventListeners and EventHandlers, and updates the current gamestate and vice versa. It has methods (in the UIHelper helper class) to create the `TextFields` given the board (with cells) and the `FXML` grid it should output to, as well as the listeners on these FXML objects. This makes sure the controller is more easily readable and not filled with FXML generating code and also ensures that the Model-View-Controller principle is kept.
+
+## 4
+
+I have tested all the important parts of the code including saving to and from file. This ensures that there wont be any bugs related to user input in the application. I chose to do this because i had the time, and the tests were pretty simple to set up. It also helped me identify where i needed to implement **error handling**, which was a requirement for the application
+
+The tests can be found in the [/test](/src/test/java/sudoku/) directory.
+
+Example of a test i've written:
+
+[CellTest.java](/src/test/java/sudoku/game/models/CellTest.java)
 
 ```java
-primaryStage.setTitle("Example App"); // Setter tittel på vinduet
-primaryStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("App.fxml")))); // Sier at appen skal bruke "App.fxml"
-primaryStage.show(); // Viser vinduet
+
+public class CellTest {
+
+    @Test
+    @DisplayName("Test Constructor")
+    public void testConstructor() throws IOException {
+        Cell cell = new Cell(1, 2, 3);
+        assertEquals(1, cell.getRow(), "Row should be 1");
+        assertEquals(2, cell.getColumn(), "Col should be 2");
+        assertEquals(3, cell.getValue(), "Value should be 3");
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            new Cell(9, 9, 10);
+            new Cell(-1, -1, -1);
+        }, "Row and Column must be between 0 and 8 and value must be between 0 and 9");
+    }
+}
 ```
 
-Kontrolleren til applikasjonen er [ExampleProjectController.java](src/main/java/exampleproject/ExampleProjectController.java). Denne filen er "bindeleddet" mellom FXML-filen(e) og klassen(e) som skal brukes i applikasjonen. I dette eksempelprosjektet har den to metoder: `initCalculator` og `handleButtonClick`. I tillegg har den noen felter som er annotert med `@FXML`. Dette viser at de tilhører [FXML-filen](src/main/resources/exampleproject/App.fxml) vår. Her er navnet på variablene viktige. F.eks er `private Label result` på linje 12 bundet til `Label`-feltet på linje 15 i [FXML-filen](src/main/resources/exampleproject/App.fxml), siden denne har en `fx:id = "result"` og variabelen vår heter `result`:
-
-```java
-@FXML
-private Label result; // Fra ExampleProjectApp.java
-
-<Label fx:id="result" layoutX="257.0" layoutY="244.0" /> // Fra App.fxml
-```
-
-Noe liknende skjer med metoden `handleButtonClick`, som også er annotert med `@FXML`. Dette gjøres slik at vi "får tak i" denne metoden fra [FXML-filen](src/main/resources/exampleproject/App.fxml). `Button`-feltet i [FXML-filen](src/main/resources/exampleproject/App.fxml) har en `onAction="#handleButtonClick"`, som vil si at metoden `handleButtonClick`, som er annotert med `@FXML`, blir kjørt når vi trykker på knappen:
-
-```xml
-<Button layoutX="271.0" layoutY="188.0" mnemonicParsing="false" onAction="#handleButtonClick" text="Kalkuler" /> <!-- Fra App.fxml -->
-```
-
-Det som gjør at [kontrolleren](src/main/java/exampleproject/ExampleProjectController.java) og [FXML-filen](src/main/resources/exampleproject/App.fxml) er koblet sammen er attributten `fx:controller='exampleproject.ExampleProjectController'` på det aller ytterste elementet i [FXML-filen](src/main/resources/exampleproject/App.fxml).
-
-```xml
-<AnchorPane fx:id="background" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="exampleproject.ExampleProjectController"> <!-- Fra App.fxml -->
-```
-
-Så, når vi trykker på knappen i appen blir som sagt metoden `handleButtonClick` kjørt. Det som skjer inne i denne metoden er først at vi oppretter en ny [kalkulator](src/main/java/exampleproject/Calculator.java). Ved opprettelse av en kalkulator trenger vi en `operator`. Denne henter vi ut fra hva en bruker av appen har skrevet inn i `TextField`-feltet med `fx:id="operator"`. Siden vi allerede har opprettet en variabel `private TextField operator`, som er annortert med `@FXML`, er denne allere linket til dette `TextField`-feltet, og vi kan hente ut teksten som er skrevet inn med `operator.getText()`.
-
-```java
-initCalculator(operator.getText()); // Kaller på initCalculator som oppretter en ny kalkulator. Operator.getText() henter ut teksten som er skrevet inn i `operator`-feltet.
-```
-
-Det samme gjelder nedover i metoden; vi henter ut verdier fra `firstNumber` og `secondNumber`. Det som er verdt å merke seg her er at de blir hentet ut som `String`s, men kalkulatoren vår krever `int`s. Derfor gjør vi de også om til integers. Her bør man og være litt forsiktige, da det ikke er gitt at brukere skriver inn gyldige tall. Derfor har vi wrappet dette inn i en `try/catch`, som sier ifra dersom tallet er ugyldig.
-
-I tillegg til alt dette er det laget en liten [eksempel testfil](src/test/java/exampleproject/CalculatorTest.java). Ingenting spennende som skjer her, det er en test for konstruktøren til [kalkulator klassen vår](src/main/java/exampleproject/Calculator.java), samt en test for metoden `calculate` den har. Alle tester dere skriver til klassene deres legges altså inn i mappen `src/test/java/<deres_prosjekt>`.
-
-## For å komme i gang med deres eget prosjekt
-
-1. Inviter gruppemedlemmene dine til dette repoet, og gi de minst en `Developer`-rolle (helst `Maintainer`)
-2. Klon dette prosjektet et sted på maskinen deres (ikke inne i Students-mappen, men gjerne i samme mappe denne ligger i).
-    - Dersom du har aktivert 2FA på GitLab-kontoen din og blir bedt om innlogging ved kloning/pushing av/til repoet må du opprette en [personal access token](https://gitlab.stud.idi.ntnu.no/-/profile/personal_access_tokens) som har "read_repository" og "write_repository"-rettigheter. Deretter kan du logge inn med ditt feidebrukernavn som brukernavn og denne tokenen som blir laget til deg som passord. En guide for hvordan opprette personal access token finnes [her](https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html#create-a-personal-access-token).
-3. Lag en ny mappe i `src/main/java/` som er deres prosjekt.
-4. Opprett en startsfil for appen deres, slik som [ExampleProjectApp.java](src/main/java/exampleproject/ExampleProjectApp.java) og en kontroller som [ExampleProjectController.java](src/main/java/exampleproject/ExampleProjectController.java) i deres nye prosjekt-mappe.
-5. Opprett en ny mappe i `src/main/resources/` som er deres prosjekt.
-6. Opprett en FXML-fil, slik som [App.fxml](src/main/resources/exampleproject/App.fxml) i deres nye prosjekt-mappe i `src/main/resources/`.
-7. **HUSK** å legge inn `fx:controller='<deres_prosjekt>.<deres_kontroller>'` på det aller ytterste elementet i den nye FXML-filen deres, ellers vil ikke appen starte.
-
-**Eventuelt**: Endre navn på filer og mapper fra "ExampleProject" til deres prosjektnavn.
-
-## Reminder av nøkkelpunkter
-
-| Nøkkelpunkt                              | Beskrivelse                             |
-| ---------------------------------------- | --------------------------------------- |
-| Innleveringsfrist                        | 14. april                               |
-| Demonstrasjonsfrist hos læringsassistent | 21. mai                                 |
-| Gruppestørrelse                          | 1 eller 2 personer                      |
-
-### Anbefalte perioder å jobbe med prosjektet
-
-| Uke   | Fra  | Til  | Beskrivelse                                 |
-| ----- | ---- | ---- | ------------------------------------------- |
-| 12    | 20/3 | 24/2 | Grunnklasser og brukergrensesnitt           |
-| 13    | 27/3 | 31/3 | Lagring of filhåndtering                    |
-| 14    |      |      | Påske                                       |
-| 15    | 10/4 | 14/4 | Fullføre appen med tilhørende dokumentasjon |
-
-**_LYKKE TIL_**
+This test checks that the constructor works properly, and that no invalid values can be set.

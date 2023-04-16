@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import sudoku.game.interfaces.SudokuProvider;
+import sudoku.game.interfaces.ISudokuProvider;
 import sudoku.game.models.Sudoku;
 import sudoku.util.FileHelper;
 
@@ -14,7 +14,7 @@ import sudoku.util.FileHelper;
  */
 public class SudokuGame {
 
-    private final SudokuProvider sudokuProvider;
+    private final ISudokuProvider sudokuProvider;
     private Sudoku currentSudoku;
 
     /**
@@ -22,7 +22,7 @@ public class SudokuGame {
      * 
      * @param provider The Sudoku provider to use
      */
-    public SudokuGame(SudokuProvider provider) {
+    public SudokuGame(ISudokuProvider provider) {
         this.sudokuProvider = provider;
         this.newGame();
     }

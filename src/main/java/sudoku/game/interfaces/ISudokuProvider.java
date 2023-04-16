@@ -2,7 +2,7 @@ package sudoku.game.interfaces;
 
 import sudoku.game.models.Sudoku;
 
-public interface SudokuProvider {
+public interface ISudokuProvider {
 
     /**
      * 

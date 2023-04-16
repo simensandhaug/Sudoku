@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 import javafx.scene.layout.GridPane;
 import sudoku.game.SudokuGame;
 import sudoku.game.models.FileSudokuProvider;
-import sudoku.ui.constants.Messages;
+import sudoku.util.constants.Messages;
 
 public class SudokuController {
 

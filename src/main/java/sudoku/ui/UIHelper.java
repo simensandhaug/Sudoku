@@ -6,7 +6,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.GridPane;
 import sudoku.game.SudokuGame;
-import sudoku.ui.constants.Messages;
+import sudoku.util.constants.Messages;
 
 /**
  * A helper class that provides methods to generate and display the Sudoku board

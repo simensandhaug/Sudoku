@@ -4,13 +4,13 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 
-import sudoku.game.interfaces.SudokuProvider;
+import sudoku.game.interfaces.ISudokuProvider;
 import sudoku.util.FileHelper;
 
 /**
- * A {@link SudokuProvider} that reads Sudoku boards from a file.
+ * A {@link ISudokuProvider} that reads Sudoku boards from a file.
  */
-public class FileSudokuProvider implements SudokuProvider {
+public class FileSudokuProvider implements ISudokuProvider {
 
     private final Random random;
     private final List<String> sudokus;
