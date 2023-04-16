@@ -33,7 +33,7 @@ Here each row is separated with a `/` and there are 9 cells in each row that can
 We were tasked with drawing either a class diagram, object diagram, object state diagram or a sequence diagram. I chose to create a **class diagram** for this Sudoku project.
 
 ![Class Diagram](ClassDiagram.png)
-*(might be a little outdated)*
+_(might be a little outdated)_
 
 The diagram shows how the logic section of the app is built up, and is therefore an **interesting/important** part of the application which was the second requirement for this part.
 
@@ -58,6 +58,7 @@ I have not used inheritance in the application, basically due to the simple natu
 ##### Java Streams
 
 I have used Java Streams in the application like this in the `CellRegion` class:
+
 ```java
     /**
      * Checks whether all cells in this region contain valid values.
@@ -83,8 +84,7 @@ I have used Java Streams in the application like this in the `CellRegion` class:
     }
 ```
 
- I did this because i think streams make the code super clean and also i dont need alot of for loops and indentation to get the same functionality. I could potentially have made these CellRegions implement `Iterable` and created and `Iterator` for them, which would cover more of the curriculum. I could also have made the `Cell` class implement `Comparable` to do the logic of comparing the different cells in a region differently. This just shows that programming has endless ways of solving a task, and no one way is always right.
-
+I did this because i think streams make the code super clean and also i dont need alot of for loops and indentation to get the same functionality. I could potentially have made these CellRegions implement `Iterable` and created and `Iterator` for them, which would cover more of the curriculum. I could also have made the `Cell` class implement `Comparable` to do the logic of comparing the different cells in a region differently. This just shows that programming has endless ways of solving a task, and no one way is always right.
 
 ##### Java Docs
 
@@ -125,3 +125,11 @@ public class CellTest {
 ```
 
 This test checks that the constructor works properly, and that no invalid values can be set.
+
+> Run the app by using this bash command
+
+```bash
+❯ java --module-path path/to/javafx-sdk-20/lib --add-modules javafx.controls,javafx.fxml,javafx.graphics,javafx.base -jar sudoku.jar
+```
+
+> Replace `path/to/javafx-sdk-20/lib` with the correct path
