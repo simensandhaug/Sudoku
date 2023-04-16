@@ -126,6 +126,8 @@ public class CellTest {
 
 This test checks that the constructor works properly, and that no invalid values can be set.
 
+## Running the application
+
 > Run the app by using this bash command
 
 ```bash
