@@ -54,6 +54,41 @@ In the `isFinished()` method in [SudokuGame.java](/src/main/java/sudoku/game/Sud
 
 I have not used inheritance in the application, basically due to the simple nature of it, and the fact that no two classes need the same behaviour inherited from a parent. There is no logical or clean way to use inheritance in my application as far as i can see, because doing so would just make a redundant class. None of the classes need the same functionality, so you would effectivly just double one class just for the sake of it. However if i did my logic a little bit differently (more complicated and abstracted), i could have the `Cell` and `CellRegion` classes extend a `Coordinate` or `Position` class, since they both technically could use this logic. Right now i dont need to store the coordinates of the CellRegions, because i only use them for validation of each row, column or 3x3 box (stream and check that all values are non-empty and unique), but if i were to create a Sudoku Solver i could need these positions and what type they are (Row, Col, Box) to apply patterns and Sudoku rules.
 
+##### Java Streams
+
+I have used Java Streams in the application like this in the `CellRegion` class:
+```java
+    /**
+     * Checks whether all cells in this region contain valid values.
+     * A value is considered valid if it is unique within the region and is between
+     * 1 and 9 (inclusive).
+     *
+     * @return true if all cells contain valid values, false otherwise.
+     */
+    public boolean isValid() {
+        Set<Integer> uniqueValues = new HashSet<>();
+        return cells.stream()
+                .map(Cell::getValue)
+                .allMatch(value -> value == 0 || uniqueValues.add(value));
+    }
+
+    /**
+     * Checks whether all cells in this region contain valid and non-zero values.
+     *
+     * @return true if all cells contain valid and non-zero values, false otherwise.
+     */
+    public boolean isFinished() {
+        return isValid() && cells.stream().noneMatch(cell -> cell.getValue() == 0);
+    }
+```
+
+ I did this because i think streams make the code super clean and also i dont need alot of for loops and indentation to get the same functionality. I could potentially have made these CellRegions implement `Iterable` and created and `Iterator` for them, which would cover more of the curriculum. I could also have made the `Cell` class implement `Comparable` to do the logic of comparing the different cells in a region differently. This just shows that programming has endless ways of solving a task, and no one way is always right.
+
+
+##### Java Docs
+
+All classes and methods are documented with Java Doc strings, this is to make sure the code is well documented and looks clean.
+
 ## 3
 
 I have separated the [models](/src/main/java/sudoku/game/) (logic) of the app, and the [view and controller](/src/main/java/sudoku/ui/) into separate packages. The models do not contain and FXML or JavaFX, and they only contain the logic for the application. The controller class connects the view and the models together, like it should. It detects changes in the view via EventListeners and EventHandlers, and updates the current gamestate and vice versa. It has methods (in the UIHelper helper class) to create the `TextFields` given the board (with cells) and the `FXML` grid it should output to, as well as the listeners on these FXML objects. This makes sure the controller is more easily readable and not filled with FXML generating code and also ensures that the Model-View-Controller principle is kept.
