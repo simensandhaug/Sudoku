@@ -4,6 +4,8 @@ Author: Simen Sandhaug
 
 # Part 1: Description of the app
 
+![UI](app.png)
+
 In this project, I have developed a **Sudoku** game using **Java** and **JavaFX** to create a user-friendly and interactive application. The goal of the application is to provide the user with an interface for solving Sudoku puzzles, and for saving and loading games to and from file `*.txt`.
 
 The application includes several features that enhance the user experience, such as the ability to upload previous games using a specific **[format](#format)**, save their games for later use, and get entirely new games selected from a predefined list. Additionally, the app provides visual feedback indicating whether the input the user enters is valid or not.
