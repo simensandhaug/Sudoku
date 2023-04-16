@@ -4,11 +4,11 @@
     <modelVersion>4.0.0</modelVersion>
  
     <groupId>TDT4100_project</groupId>
-    <artifactId>tdt4100_v2023_prosjekt_boilerplate</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <artifactId>sudoku</artifactId>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
  
-    <name>tdt4100_v2023_prosjekt_boilerplate</name>
+    <name>Sudoku</name>
 	
 
    <dependencies>
@@ -18,6 +18,24 @@
 	  <artifactId>javafx-fxml</artifactId>
 	  <version>20</version>
 	</dependency>
+
+    <dependency>
+        <groupId>org.openjfx</groupId>
+        <artifactId>javafx-controls</artifactId>
+        <version>20</version>
+    </dependency>
+	<dependency>
+        <groupId>org.openjfx</groupId>
+        <artifactId>javafx-base</artifactId>
+        <version>20</version>
+    </dependency>
+		<dependency>
+        <groupId>org.openjfx</groupId>
+        <artifactId>javafx-graphics</artifactId>
+        <version>20</version>
+    </dependency>
+    <!-- Add other JavaFX modules if needed -->
+
 
 
 	<!-- JUnit 5 -->
@@ -61,7 +79,30 @@
 				</configuration>
 			</plugin>
 
-
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-assembly-plugin</artifactId>
+    <executions>
+        <execution>
+            <phase>package</phase>
+            <goals>
+                <goal>single</goal>
+            </goals>
+            <configuration>
+                <archive>
+                <manifest>
+                    <mainClass>
+                        sudoku.ui.SudokuApp
+                    </mainClass>
+                </manifest>
+                </archive>
+                <descriptorRefs>
+                    <descriptorRef>jar-with-dependencies</descriptorRef>
+                </descriptorRefs>
+            </configuration>
+        </execution>
+    </executions>
+</plugin>
 	</plugins>
   </build>
 </project>
