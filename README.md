@@ -33,6 +33,7 @@ Here each row is separated with a `/` and there are 9 cells in each row that can
 We were tasked with drawing either a class diagram, object diagram, object state diagram or a sequence diagram. I chose to create a **class diagram** for this Sudoku project.
 
 ![Class Diagram](ClassDiagram.png)
+*(might be a little outdated)*
 
 The diagram shows how the logic section of the app is built up, and is therefore an **interesting/important** part of the application which was the second requirement for this part.
 
